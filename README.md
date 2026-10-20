@@ -27,12 +27,8 @@ yet implemented.
 
 ## Code style
 
-Python files follow Ruff’s default formatting: four spaces, double quotes,
-and an 88-character line length.
+Python files use four spaces, double quotes, and an 88-character line length.
 Imports are grouped into standard library, third-party, and project imports.
-
-- `make format`: sort imports and format Python files with Ruff.
-- `make check`: check lint rules and formatting.
 
 Source code is organized into `core` (shared game systems), `entities` (world
 objects and the player), and `ui` (interface rendering and interaction).
