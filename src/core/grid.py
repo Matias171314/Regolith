@@ -8,6 +8,7 @@ import pygame
 from config import COLOR_GRID
 
 
+
 class Grid:
     """Manages the 2D spatial grid for the simulation.
 
@@ -29,6 +30,13 @@ class Grid:
         self.height = height
         self.tile_size = tile_size
 
+    def is_valid_cell(self, grid_x: int, grid_y: int) -> bool:
+        """Returns whether the cell fits entirely inside the grid."""
+        columns = self.width // self.tile_size
+        rows = self.height // self.tile_size
+
+        return 0 <= grid_x < columns and 0 <= grid_y < rows
+
     def draw(self, screen: pygame.Surface):
         """Draws the grid lines onto the provided surface.
 
@@ -38,7 +46,7 @@ class Grid:
         # Draw vertical lines
         for x in range(0, self.width, self.tile_size):
             pygame.draw.line(screen, COLOR_GRID, (x, 0), (x, self.height))
-        
+
         # Draw horizontal lines
         for y in range(0, self.height, self.tile_size):
             pygame.draw.line(screen, COLOR_GRID, (0, y), (self.width, y))

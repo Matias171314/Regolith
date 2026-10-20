@@ -2,7 +2,7 @@ VENV = matrix
 PYTHON = $(VENV)/bin/python
 PIP = $(VENV)/bin/pip
 
-MAIN = src/main.pyj
+MAIN = src/main.py
 
 venv:
 	python3 -m venv $(VENV)

@@ -8,6 +8,7 @@ import pygame
 from config import TILE_SIZE
 
 
+
 class BaseEntity:
     """Abstract base class representing an object on the grid.
 
@@ -32,9 +33,16 @@ class BaseEntity:
         self.color = color
         self.name = name
 
+    @property
+    def rect(self):
+        """The full cell occupied by this entity, in pixels."""
+        return pygame.Rect(
+            self.grid_x * TILE_SIZE, self.grid_y * TILE_SIZE, TILE_SIZE, TILE_SIZE
+        )
+
     def update(self):
         """Updates the entity's logical state.
-        
+
         To be overridden by subclasses. For example, a solar panel subclass
         would generate power here every frame.
         """
@@ -49,8 +57,4 @@ class BaseEntity:
         Args:
             screen: The Pygame surface to draw on.
         """
-        pixel_x = self.grid_x * TILE_SIZE
-        pixel_y = self.grid_y * TILE_SIZE
-
-        rect = pygame.Rect(pixel_x + 2, pixel_y + 2, TILE_SIZE - 4, TILE_SIZE - 4)
-        pygame.draw.rect(screen, self.color, rect)
+        pygame.draw.rect(screen, self.color, self.rect.inflate(-4, -4))

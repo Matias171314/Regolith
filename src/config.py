@@ -17,3 +17,7 @@ COLOR_ACCENT = (0, 212, 255)     # Indicators
 
 # --- Pixel Size ---
 TILE_SIZE = 64
+
+# --- Interface ---
+TOOLBAR_HEIGHT = 80
+BOARD_HEIGHT = WINDOW_HEIGHT - TOOLBAR_HEIGHT
