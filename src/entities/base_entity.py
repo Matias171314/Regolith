@@ -46,7 +46,6 @@ class BaseEntity:
         To be overridden by subclasses. For example, a solar panel subclass
         would generate power here every frame.
         """
-        pass
 
     def draw(self, screen: pygame.Surface):
         """Renders the entity onto the grid.
