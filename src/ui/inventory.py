@@ -6,6 +6,8 @@ from config import COLOR_ACCENT, COLOR_GRID, COLOR_UI_TEXT
 
 
 class InventoryPanel:
+    """Draws inventory slots and handles swapping their contents."""
+
     def __init__(self, width, height):
         self.is_open = False
         self.selected_slot = None
@@ -15,8 +17,12 @@ class InventoryPanel:
         self.overlay = pygame.Surface((width, height), pygame.SRCALPHA)
         self.overlay.fill((0, 0, 0, 150))
         self.slots = [
-            pygame.Rect(self.rect.x + 24 + (i % 5) * 124,
-                        self.rect.y + 76 + (i // 5) * 80, 116, 70)
+            pygame.Rect(
+                self.rect.x + 24 + (i % 5) * 124,
+                self.rect.y + 76 + (i // 5) * 80,
+                116,
+                70,
+            )
             for i in range(15)
         ]
 
@@ -28,7 +34,8 @@ class InventoryPanel:
                 else:
                     source = self.selected_slot
                     inventory.slots[source], inventory.slots[index] = (
-                        inventory.slots[index], inventory.slots[source]
+                        inventory.slots[index],
+                        inventory.slots[source],
                     )
                     self.selected_slot = None
                 return
@@ -43,8 +50,10 @@ class InventoryPanel:
             ("Haz clic en dos casillas para intercambiarlas.", 44),
             ("Tab o Esc: cerrar", self.rect.height - 30),
         ]:
-            screen.blit(self.font.render(text, True, COLOR_UI_TEXT),
-                        (self.rect.x + 24, self.rect.y + y))
+            screen.blit(
+                self.font.render(text, True, COLOR_UI_TEXT),
+                (self.rect.x + 24, self.rect.y + y),
+            )
         for index, slot in enumerate(self.slots):
             pygame.draw.rect(screen, (35, 49, 62), slot)
             color = COLOR_ACCENT if index == self.selected_slot else COLOR_GRID

@@ -4,31 +4,33 @@ This module initializes the Pygame environment and encapsulates the core
 game loop, handling events, logical updates, and rendering.
 """
 
-import pygame
 import sys
+
+import pygame
+
 from config import (
-    WINDOW_WIDTH,
-    WINDOW_HEIGHT,
-    FPS,
-    TITLE,
-    COLOR_BG,
-    TILE_SIZE,
     BOARD_HEIGHT,
+    COLOR_BG,
+    FPS,
+    TILE_SIZE,
+    TITLE,
     TOOLBAR_HEIGHT,
+    WINDOW_HEIGHT,
+    WINDOW_WIDTH,
 )
 from core.grid import Grid
-from ui.toolbar import Toolbar
+from entities.modules import (
+    Greenhouse,
+    Habitat,
+    OxygenGenerator,
+    SolarPanel,
+    WaterTank,
+)
+from entities.player import Player
 from ui.hud import HUD
 from ui.inventory import InventoryPanel
 from ui.module_panel import ModulePanel
-from entities.player import Player
-from entities.modules import (
-    SolarPanel,
-    OxygenGenerator,
-    Habitat,
-    WaterTank,
-    Greenhouse,
-)
+from ui.toolbar import Toolbar
 
 
 class RegolithGame:
@@ -51,7 +53,13 @@ class RegolithGame:
         self.grid = Grid(WINDOW_WIDTH, BOARD_HEIGHT, TILE_SIZE)
         self.toolbar = Toolbar(BOARD_HEIGHT, WINDOW_WIDTH, TOOLBAR_HEIGHT)
         self.player = Player(WINDOW_WIDTH / 2, BOARD_HEIGHT / 2)
-        for module_class in (SolarPanel, OxygenGenerator, Habitat, WaterTank, Greenhouse):
+        for module_class in (
+            SolarPanel,
+            OxygenGenerator,
+            Habitat,
+            WaterTank,
+            Greenhouse,
+        ):
             self.player.inventory.add(module_class, 3)
         self.hud = HUD()
         self.inventory_panel = InventoryPanel(WINDOW_WIDTH, WINDOW_HEIGHT)
@@ -72,10 +80,16 @@ class RegolithGame:
         nearest = None
         best_distance = 48
         for entity in self.entities:
-            dx = max(entity.rect.left - self.player.rect.right,
-                     self.player.rect.left - entity.rect.right, 0)
-            dy = max(entity.rect.top - self.player.rect.bottom,
-                     self.player.rect.top - entity.rect.bottom, 0)
+            dx = max(
+                entity.rect.left - self.player.rect.right,
+                self.player.rect.left - entity.rect.right,
+                0,
+            )
+            dy = max(
+                entity.rect.top - self.player.rect.bottom,
+                self.player.rect.top - entity.rect.bottom,
+                0,
+            )
             distance = pygame.Vector2(dx, dy).length()
             if distance <= best_distance:
                 nearest, best_distance = entity, distance
@@ -186,9 +200,7 @@ class RegolithGame:
 
     def can_build_at(self, grid_x, grid_y):
         """Checks bounds, buildings and the player's entire rectangle."""
-        cell = pygame.Rect(
-            grid_x * TILE_SIZE, grid_y * TILE_SIZE, TILE_SIZE, TILE_SIZE
-        )
+        cell = pygame.Rect(grid_x * TILE_SIZE, grid_y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
         return (
             self.grid.is_valid_cell(grid_x, grid_y)
             and not self.is_cell_occupied(grid_x, grid_y)
@@ -209,10 +221,9 @@ class RegolithGame:
         grid_x = mouse_x // TILE_SIZE
         grid_y = mouse_y // TILE_SIZE
 
-        if (
-            self.player.inventory.slots[self.selected_slot] is None
-            or not self.can_build_at(grid_x, grid_y)
-        ):
+        if self.player.inventory.slots[
+            self.selected_slot
+        ] is None or not self.can_build_at(grid_x, grid_y):
             preview_color = (220, 70, 70)
         else:
             preview_color = (70, 220, 120)
@@ -257,8 +268,11 @@ class RegolithGame:
         if self.message_timer > 0:
             hint = self.message
         text = self.font.render(hint, True, (230, 237, 243))
-        pygame.draw.rect(self.screen, (22, 28, 36),
-                         (12, BOARD_HEIGHT - 34, text.get_width() + 16, 28))
+        pygame.draw.rect(
+            self.screen,
+            (22, 28, 36),
+            (12, BOARD_HEIGHT - 34, text.get_width() + 16, 28),
+        )
         self.screen.blit(text, (20, BOARD_HEIGHT - 30))
         if self.module_panel.module is not None:
             self.module_panel.draw(self.screen)

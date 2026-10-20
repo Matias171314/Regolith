@@ -6,6 +6,8 @@ from config import COLOR_ACCENT, COLOR_UI_TEXT
 
 
 class ModulePanel:
+    """Displays a nearby building and the controls for recovering it."""
+
     def __init__(self, width, height):
         self.module = None
         self.rect = pygame.Rect(0, 0, 580, 260)
@@ -19,15 +21,18 @@ class ModulePanel:
         pygame.draw.rect(screen, (22, 28, 36), self.rect)
         pygame.draw.rect(screen, COLOR_ACCENT, self.rect, width=2)
         y = self.rect.y + 24
-        screen.blit(self.font.render(self.module.name, True, COLOR_ACCENT),
-                    (self.rect.x + 24, y))
+        screen.blit(
+            self.font.render(self.module.name, True, COLOR_ACCENT),
+            (self.rect.x + 24, y),
+        )
         y += 42
         line = ""
         for word in self.module.description.split():
             candidate = f"{line} {word}".strip()
             if self.font.size(candidate)[0] > self.rect.width - 48:
-                screen.blit(self.font.render(line, True, COLOR_UI_TEXT),
-                            (self.rect.x + 24, y))
+                screen.blit(
+                    self.font.render(line, True, COLOR_UI_TEXT), (self.rect.x + 24, y)
+                )
                 y += 26
                 line = word
             else:
@@ -37,5 +42,7 @@ class ModulePanel:
             ("R: recoger módulo al inventario", 76),
             ("E o Esc: cerrar", 42),
         ]:
-            screen.blit(self.font.render(text, True, COLOR_UI_TEXT),
-                        (self.rect.x + 24, self.rect.bottom - offset))
+            screen.blit(
+                self.font.render(text, True, COLOR_UI_TEXT),
+                (self.rect.x + 24, self.rect.bottom - offset),
+            )

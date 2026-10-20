@@ -5,8 +5,8 @@ that exist on the lunar grid.
 """
 
 import pygame
-from config import TILE_SIZE
 
+from config import TILE_SIZE
 
 
 class BaseEntity:

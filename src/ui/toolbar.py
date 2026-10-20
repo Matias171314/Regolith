@@ -6,6 +6,8 @@ from config import COLOR_ACCENT, COLOR_GRID, COLOR_UI_TEXT
 
 
 class Toolbar:
+    """Displays and selects the first five inventory slots."""
+
     def __init__(self, y, width, height):
         self.rect = pygame.Rect(0, y, width, height)
         self.font = pygame.font.Font(None, 20)
@@ -13,7 +15,9 @@ class Toolbar:
         gap = 8
         start_x = (width - 5 * (slot_width + gap) + gap) // 2
         self.slots = [
-            pygame.Rect(start_x + i * (slot_width + gap), y + 10, slot_width, height - 20)
+            pygame.Rect(
+                start_x + i * (slot_width + gap), y + 10, slot_width, height - 20
+            )
             for i in range(5)
         ]
 

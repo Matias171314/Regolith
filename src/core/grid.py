@@ -5,8 +5,8 @@ logical coordinates and screen pixels, and renders the visual grid.
 """
 
 import pygame
-from config import COLOR_GRID
 
+from config import COLOR_GRID
 
 
 class Grid:

@@ -5,6 +5,8 @@ from dataclasses import dataclass
 
 @dataclass
 class ItemStack:
+    """A module type and the number of units stored together."""
+
     module_class: type
     quantity: int
 
@@ -13,6 +15,8 @@ class ItemStack:
 
 
 class Inventory:
+    """Stores item stacks shared by the backpack and quick-access bar."""
+
     def __init__(self):
         self.slots = [None] * 15
 

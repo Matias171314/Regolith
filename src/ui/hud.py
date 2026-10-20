@@ -6,6 +6,8 @@ from config import COLOR_UI_TEXT
 
 
 class HUD:
+    """Displays the player's health, energy, and oxygen."""
+
     def __init__(self):
         self.rect = pygame.Rect(12, 12, 228, 132)
         self.font = pygame.font.Font(None, 23)
